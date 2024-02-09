@@ -1,7 +1,6 @@
-import Image from "next/image";
+
+import Link from "next/link";
 
 export default function Home() {
-  return (
-    <h1>Botani Know</h1>
-  );
+  return <Link href="/main">Botani Know</Link>;
 }
