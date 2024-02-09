@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { M_BOLD } from "./fonts";
 
 export const metadata: Metadata = {
   manifest: "/manifest.json",
@@ -11,15 +9,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={`${inter.className} bg-[#F5F5F7] my-[1rem]`}>
-        {children}
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<body className={M_BOLD.className}>{children}</body>
+		</html>
+	);
 }
