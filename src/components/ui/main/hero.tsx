@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <>
-      <div className="flex w-screen gap-[5vw] my-[25vw] ">
+      <div className="flex w-screen gap-[5vw] my-[5vw] ">
         <div className="">
           <Image
             src={plant}
@@ -17,7 +17,7 @@ export default function Hero() {
         <div className="flex ">
           <Card className=" rounded-2xl pt-[0.5rem] px-[0.5rem] text-[#163F2C]">
             <h1 className="font-bold text-[1.2rem] py-[-10vh] ">Hibiscus</h1>
-            <h1 className="text-[1rem] text-wrap">Oblangata Hibscuses</h1>
+            <h1 className="text-[0.9rem] text-wrap">Oblangata Hibscuses</h1>
           </Card>
         </div>
       </div>
