@@ -1,11 +1,36 @@
-
+"use client";
 import Image from "next/image";
 import P1 from "/public/images/P1.svg";
 import UpperStem from "/public/images/Upper Stem.svg";
 import Server from "/public/images/Server.svg";
 import LowerStem from "/public/images/Lower Stem.svg";
 import Result from "/public/images/Result.svg";
+import { useState } from "react";
 export default function Home() {
+	const [selectedFile, setSelectedFile] = useState<string | undefined>();
+	const handleFileChange = (
+		event: React.ChangeEvent<HTMLInputElement>
+	): void => {
+		console.log("Hell is here");
+
+		const file = event.target.files?.[0];
+		console.log(event);
+
+		if (file && file.type.startsWith("image/")) {
+			const reader = new FileReader();
+			reader.onload = () => {
+				// Assume reader.result is of type string
+				console.log(reader.result);
+
+				setSelectedFile(reader.result as string); // Store image data URL directly
+				// Optionally navigate to next route here
+			};
+			reader.readAsDataURL(file);
+		} else {
+			// Handle non-image file selection (e.g., show an error message)
+			console.error("Selected file is not an image.");
+		}
+	};
 	return (
 		<>
 			{/* Hero Section*/}
@@ -17,10 +42,10 @@ export default function Home() {
 					</h1>
 					<label className="border-2 rounded-[25px] py-3 px-14 min-w-64 bg-landing-btn-color font-extralight font text-wrap text-center text-main-color cursor-pointer">
 						<input
-							id="cameraInput"
 							className="hidden"
 							type="file"
 							accept="image/*"
+							onChange={handleFileChange}
 							required
 						/>
 						Scan Now!
