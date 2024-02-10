@@ -24,9 +24,6 @@ export async function POST(req: NextRequest) {
   if (!file) {
     return NextResponse.json({ error: "No files received." }, { status: 400 });
   }
-  const prompt =
-    promptMap[formData.get("user")?.toString() as keyof typeof promptMap];
-
   const imageParts = [await fileToGenerativePart(file)];
   const API_KEY = process.env.API_KEY!;
   try {
@@ -59,7 +56,7 @@ export async function POST(req: NextRequest) {
       }
     }
     
-    Please provide comprehensive details for each section. If possible, include practical insights and relevant information for farmers, students, and the general audience. If any specific details are unknown, feel free to provide general information or skip that part.the plant info should be atmost 3 lines 
+    Please provide comprehensive details for each section. If possible, include practical insights and relevant information for farmers, students, and the general audience. If any specific details are unknown, feel free to provide general information or skip that part.the plant info should be atmost 3 lines . the price should be per kg only number , and the cost of cultivation must be a number , yield must be for per year
     `;
 
     const result = await model.generateContent([prompt, ...imageParts]);
