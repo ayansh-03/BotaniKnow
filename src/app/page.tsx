@@ -1,34 +1,29 @@
 "use client";
 import Image from "next/image";
-import P1 from "/public/images/P1.svg";
-import UpperStem from "/public/images/Upper Stem.svg";
-import Server from "/public/images/Server.svg";
+import { useRouter } from "next/navigation";
 import LowerStem from "/public/images/Lower Stem.svg";
+import P1 from "/public/images/P1.svg";
 import Result from "/public/images/Result.svg";
-import { useState } from "react";
+import Server from "/public/images/Server.svg";
+import UpperStem from "/public/images/Upper Stem.svg";
+
 export default function Home() {
-	const [selectedFile, setSelectedFile] = useState<string | undefined>();
+	const router = useRouter();
 	const handleFileChange = (
 		event: React.ChangeEvent<HTMLInputElement>
 	): void => {
-		console.log("Hell is here");
-
 		const file = event.target.files?.[0];
-		console.log(event);
+		console.log("FILE->1");
 
 		if (file && file.type.startsWith("image/")) {
 			const reader = new FileReader();
 			reader.onload = () => {
-				// Assume reader.result is of type string
-				console.log(reader.result);
-
-				setSelectedFile(reader.result as string); // Store image data URL directly
-				// Optionally navigate to next route here
+				localStorage.setItem("img", JSON.stringify(reader.result as string));
+				router.push(`/main`);
 			};
 			reader.readAsDataURL(file);
 		} else {
-			// Handle non-image file selection (e.g., show an error message)
-			console.error("Selected file is not an image.");
+			alert("File is not an image");
 		}
 	};
 	return (
