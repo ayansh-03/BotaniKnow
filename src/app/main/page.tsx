@@ -2,30 +2,41 @@
 import Ai from "@/components/ui/main/ai";
 import Body from "@/components/ui/main/body";
 import Hero from "@/components/ui/main/hero";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function Page() {
-	useEffect(() => {
-		const blobText = localStorage.getItem("img");
+  const [imageData, setImageData] = useState("");
 
-		if (blobText) {
-			const imgElement = new Image();
+  useEffect(() => {
+    const fetchData = async () => {
+      const blobText = localStorage.getItem("img");
 
-			imgElement.src = blobText;
+      if (blobText) {
+        try {
+          // Set the image data in state
+          setImageData(blobText);
 
-			//& API CALL.
-			console.log("API CALL --> ", imgElement);
-		} else {
-			// Handle the case where there is no data in localStorage
-			alert("No image data found in localStorage");
-		}
-	}, []);
+          // Trigger download immediately after image data retrieval
+		  const blob = new Blob([blobText], { type: "image/png" });
+		  
+        } catch (error) {
+          console.error("Error setting image data:", error);
+        }
+      } else {
+        alert("No image data found in localStorage");
+      }
+    };
 
-	return (
-		<div className="flex flex-col mx-[5vw]">
-			<Hero />
-			<Body />
-			<Ai />
-		</div>
-	);
+    fetchData();
+  }, []);
+
+
+
+  return (
+    <div className="flex flex-col mx-[5vw]">
+      <Hero />
+      <Body />
+      <Ai />
+    </div>
+  );
 }
