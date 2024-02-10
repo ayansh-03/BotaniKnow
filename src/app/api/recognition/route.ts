@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
     const prompt: string = `Generate detailed information about a plant. Include the following sections
     {
       "name": "<plant_name>",
+      "info": "<plant_info>",
       "description": {
         "farmer": {
           "howToGrow": "",
@@ -58,24 +59,23 @@ export async function POST(req: NextRequest) {
       }
     }
     
-    Please provide comprehensive details for each section. If possible, include practical insights and relevant information for farmers, students, and the general audience. If any specific details are unknown, feel free to provide general information or skip that part.
+    Please provide comprehensive details for each section. If possible, include practical insights and relevant information for farmers, students, and the general audience. If any specific details are unknown, feel free to provide general information or skip that part.the plant info should be atmost 3 lines 
     `;
 
     const result = await model.generateContent([prompt, ...imageParts]);
     const response = result.response;
     const text = response.text();
-    // console.log(text)
-    const resu = JSON.parse(text)
-    console.log(resu)
+    const jsonResponse = JSON.parse(text)
+    
 
     await prisma.plants.create({
       data: {
-        name: resu.name,
-        response: resu.description,
+        name: jsonResponse.name,
+        response: jsonResponse.description,
       },
     });
 
-    return NextResponse.json({ msg: "success", resu }, { status: 201 });
+    return NextResponse.json({ msg: "success", jsonResponse  }, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: error }, { status: 500 });
