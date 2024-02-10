@@ -31,8 +31,10 @@ Uncover the hidden secrets of the plant world with Botani-Know, your friendly po
 
 -> **Start Exploring:** - Capture a plant photo or select an existing image. - Scan the image for the identified plant and its information. - Choose your preferred information level for a customized experience. - Dive deeper with multimedia content and explore other plants in the database.
 
-**Real-life use-cases**
+## Real-life Use-cases
+
 Imagine a user is hiking in a forest or exploring a garden and encounters unfamiliar plants. They want to know if these plants have any medicinal properties or if they are harmful. Instead of relying solely on their limited knowledge or taking the risk of ingesting or touching unknown plants, they can use the medicinal plant information application to identify and learn about the plants instantly.
 
-**Botani-Bot**
+## Botani-Bot
+
 Meet Botani-Bot, your virtual herbal companion designed to assist you in discovering the diverse world of medicinal plants! BotaniBot is an intelligent chatbot integrated into our medicinal information application, aimed at providing users with comprehensive insights into the therapeutic properties and uses of various plants.
