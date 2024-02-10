@@ -13,7 +13,6 @@ export default function Home() {
 		event: React.ChangeEvent<HTMLInputElement>
 	): void => {
 		const file = event.target.files?.[0];
-		console.log("FILE->1");
 
 		if (file && file.type.startsWith("image/")) {
 			const reader = new FileReader();

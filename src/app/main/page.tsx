@@ -6,15 +6,22 @@ import { useEffect } from "react";
 
 export default function Page() {
 	useEffect(() => {
-		const blobText = localStorage.getItem("img");
+		const item = localStorage.getItem("img");
+		const blobText = item ? JSON.parse(item) : null;
 
 		if (blobText) {
-			const imgElement = new Image();
+			const filename = "image-" + Date.now() + ".jpg";
 
-			imgElement.src = blobText;
+			const imageUrl = URL.createObjectURL(blobText);
 
-			//& API CALL.
-			console.log("API CALL --> ", imgElement);
+			const link = document.createElement("a");
+			link.href = imageUrl;
+			link.download = filename;
+			console.log(link);
+
+			link.click();
+
+			URL.revokeObjectURL(imageUrl);
 		} else {
 			// Handle the case where there is no data in localStorage
 			alert("No image data found in localStorage");
