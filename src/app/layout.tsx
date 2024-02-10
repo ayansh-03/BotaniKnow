@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<html lang="en">
-			<body className={M_BOLD.className}>{children}</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <body className={`${M_BOLD.className} bg-[#F5F5F7]`}>{children}</body>
+    </html>
+  );
 }
