@@ -22,7 +22,7 @@ export default function Page() {
 	}, []);
 
 	return (
-		<div className="flex flex-col mx-[5vw]">
+		<div className="flex flex-col mx-[5vw] ">
 			<Hero />
 			<Body />
 			<Ai />

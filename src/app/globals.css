@@ -85,3 +85,17 @@
 		--ring: 212.7 26.8% 83.9%;
 	}
 }
+.bold-M {
+	font-family: var(--font-M_BOLD);
+}
+
+.medium-M {
+	font-family: var(--font-M_MEDIUM);
+}
+
+.light-M {
+	font-family: var(--font-M_MEDIUM);
+}
+.regular-M {
+	font-family: var(--font-M_MEDIUM);
+}
