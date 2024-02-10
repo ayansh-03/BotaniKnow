@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Botani-Know: Your Personal Plant Identification and Information Guide
 
-## Getting Started
+**Description:**
 
-First, run the development server:
+Uncover the hidden secrets of the plant world with Botani-Know, your friendly pocket guide. Capture a plant image, scan, and instantly access valuable information tailored to your needs, whether you're a seasoned farmer, curious student, or nature enthusiast.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Key Features:**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Powerful Plant Identification:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  - Capture clear photos with your phone's camera.
+  - Advanced image recognition technology identifies species with impressive accuracy.
+  - Extensive plant database ensures reliable results.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Personalized Information:**
 
-## Learn More
+  - Choose from tailored information tiers:
+    - Farmers: Detailed cultivation guides, yield expectations, pest & disease insights, market information.
+    - Students: In-depth botanical knowledge, comprehensive descriptions, morphological details, fascinating ecological interactions.
+    - General Users: Discover fascinating facts, traditional uses, cultural significance, and potential culinary applications.
 
-To learn more about Next.js, take a look at the following resources:
+- **Engaging Learning Experience:**
+  - Immerse yourself in rich multimedia content:
+    - Informative videos hosted by experts.
+    - Stunning high-resolution plant images.
+    - Interactive diagrams and illustrations.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Getting Started:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+-> **Install as a PWA:** - Access "Botani-Know" through your web browser. - Install it as a Progressive Web App for an enhanced mobile experience.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-> **Start Exploring:** - Capture a plant photo or select an existing image. - Scan the image for the identified plant and its information. - Choose your preferred information level for a customized experience. - Dive deeper with multimedia content and explore other plants in the database.
