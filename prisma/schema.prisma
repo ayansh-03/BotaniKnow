@@ -7,8 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model plants {
-  id       Int     @id @default(autoincrement())
-  response Json?   @db.Json
-  name     String? @db.VarChar(255)
+
+model Plant{
+  id Int @id @default(autoincrement())
+  response Json? @db.Json
+  name String @db.VarChar(255) @unique
+  @@map("plants")
 }

@@ -1,8 +1,7 @@
+import prisma from "@/lib/prisma";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 import { NextRequest, NextResponse } from "next/server";
-import { promptMap } from "./utils";
-import prisma from "@/lib/prisma";
 
 async function fileToGenerativePart(fileEntry: FormDataEntryValue) {
   const file =
@@ -62,17 +61,22 @@ export async function POST(req: NextRequest) {
     const result = await model.generateContent([prompt, ...imageParts]);
     const response = result.response;
     const text = response.text();
-    const jsonResponse = JSON.parse(text)
-    
+    const jsonResponse = JSON.parse(text);
 
-    await prisma.plants.create({
-      data: {
+    await prisma.plant.upsert({
+      where: { name: jsonResponse.name }, // Identify the entry by name
+      create: {
         name: jsonResponse.name,
         response: jsonResponse.description,
       },
+      update: {
+        response: jsonResponse.description,
+      },
     });
+    
 
-    return NextResponse.json({ msg: "success", jsonResponse  }, { status: 201 });
+
+    return NextResponse.json({ msg: "success", jsonResponse }, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: error }, { status: 500 });
