@@ -1,28 +1,90 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { data } from "./data";
 import bullet from "/public/Images/Glyph_ undefined.svg";
 import Image from "next/image";
+import prisma from "@/lib/prisma";
 
-export default function Body() {
+interface DescriptionCommon {
+	medicinalProperties: string;
+}
+
+interface FarmerDescription extends DescriptionCommon {
+	howToGrow: string;
+	requiredManure: string;
+	favorableConditions: string;
+	price: string;
+	yield: string;
+	costOfCultivation: string;
+}
+
+interface StudentDescription extends DescriptionCommon {
+	uses: string;
+	storageConditions: string;
+}
+
+interface GenericDescription extends DescriptionCommon {
+	facts: string;
+}
+
+interface PlantDescription {
+	farmer: FarmerDescription;
+	student: StudentDescription;
+	generic: GenericDescription;
+}
+
+interface Data {
+	msg: string;
+	jsonResponse: {
+		name: string;
+		info: string;
+		description: PlantDescription;
+	};
+}
+
+
+
+interface BodyProps{
+	plant: string
+}
+
+export default function Body(props: BodyProps) {
+	
+	const [data, setData] = useState<Data>();
+
+	useEffect(() => {
+		async function fetchPlant() {
+			const data = await prisma.plants.find({
+				where:{name : props.plant}
+			})
+			
+			const result = await data.json()
+			console.log(result);
+
+			setData(result.response)
+
+
+		}	
+		fetchPlant()
+	},);
 	const [activeButton, setActiveButton] = useState("Generic");
-	const facts = data.resu.description.generic.facts.split(".");
+	const facts = data?.jsonResponse.description.generic.facts.split(".");
 	const medicinalProperties =
-		data.resu.description.generic.medicinalProperties.split(".");
+		data?.jsonResponse.description.generic.medicinalProperties.split(".");
 	const howToGrow =
-		data.resu.description.farmer.howToGrow.split("/(?<!d.d)\n/");
+		data?.jsonResponse.description.farmer.howToGrow.split("/(?<!d.d)\n/");
 
 	const fertilizersAndConditons =
-		data.resu.description.farmer.favorableConditions.split(".");
-	const yield_ = data.resu.description.farmer.yield;
-	const CostOfCult = data.resu.description.farmer.costOfCultivation;
+		data?.jsonResponse.description.farmer.favorableConditions.split(".");
+	const yield_ = data?.jsonResponse.description.farmer.yield;
+	const CostOfCult = data?.jsonResponse.description.farmer.costOfCultivation;
 
-	const uses = data.resu.description.student.uses.split(".");
+	const uses = data?.jsonResponse.description.student.uses.split(".");
 	const medicinalProperties_s =
-		data.resu.description.student.medicinalProperties.split(".");
-	const st_cond = data.resu.description.student.storageConditions.split(".");
+		data?.jsonResponse.description.student.medicinalProperties.split(".");
+	const st_cond = data?.jsonResponse.description.student.storageConditions.split(".");
 
 	const handleButtonClick = (title: string) => {
 		setActiveButton(title);
@@ -65,12 +127,12 @@ export default function Body() {
 			</menu>
 			<Card className="min-h-[30vh] p-7 text-wrap rounded-[2rem] border-none shadow-lg">
 				<h2 className="text-xl py-2">Description</h2>
-				<p className="light-M">{data.resu.info}</p>
+				<p className="light-M">{data?.jsonResponse.info}</p>
 				{activeButton === "Generic" ? (
 					<>
 						<h2 className="text-xl py-2">Facts</h2>
 						<ul>
-							{facts.map(
+							{data?.jsonResponse.description.generic.facts.split(".").map(
 								(sentence, index) =>
 									sentence !== "" && (
 										<li key={index} className="py-2 light-M">
@@ -91,30 +153,32 @@ export default function Body() {
 						<br />
 						<h2 className="text-xl py-2">Medicinal Properties</h2>
 						<ul>
-							{medicinalProperties.map(
-								(sentence, index) =>
-									sentence !== "" && (
-										<li key={index} className="py-2 light-M">
-											<Image
-												alt="Bullet"
-												src={bullet}
-												width={20}
-												className="inline"
-											/>
-											{"   "}
-											<span className="font-thin leading-3 light-M">
-												{sentence}
-											</span>
-										</li>
-									)
-							)}
+							{data?.jsonResponse.description.student.medicinalProperties
+								.split(".")
+								.map(
+									(sentence, index) =>
+										sentence !== "" && (
+											<li key={index} className="py-2 light-M">
+												<Image
+													alt="Bullet"
+													src={bullet}
+													width={20}
+													className="inline"
+												/>
+												{"   "}
+												<span className="font-thin leading-3 light-M">
+													{sentence}
+												</span>
+											</li>
+										)
+								)}
 						</ul>
 					</>
 				) : activeButton === "Farmer" ? (
 					<>
 						<h2 className="text-xl py-2 bold-M">Steps to grow</h2>
 						<ul>
-							{howToGrow.map(
+							{data?.jsonResponse.description.farmer.howToGrow.split(".").map(
 								(sentence, index) =>
 									sentence !== "" && (
 										<li key={index} className="py-2 light-M">
@@ -134,23 +198,25 @@ export default function Body() {
 						</ul>
 						<h2 className="text-xl py-2">Fertilizers and Conditions</h2>
 						<ul>
-							{fertilizersAndConditons.map(
-								(sentence, index) =>
-									sentence !== "" && (
-										<li key={index} className="py-2 light-M">
-											<Image
-												alt="Bullet"
-												src={bullet}
-												width={20}
-												className="inline"
-											/>
-											{"  "}
-											<span className="font-thin leading-3 light-M">
-												{sentence}
-											</span>
-										</li>
-									)
-							)}
+							{data?.jsonResponse.description.farmer.requiredManure
+								.split(".")
+								.map(
+									(sentence, index) =>
+										sentence !== "" && (
+											<li key={index} className="py-2 light-M">
+												<Image
+													alt="Bullet"
+													src={bullet}
+													width={20}
+													className="inline"
+												/>
+												{"  "}
+												<span className="font-thin leading-3 light-M">
+													{sentence}
+												</span>
+											</li>
+										)
+								)}
 						</ul>
 						<h2 className="text-xl py-2">Yield</h2>
 						<p className="light-M py-2">{yield_}</p>
@@ -161,7 +227,7 @@ export default function Body() {
 					<>
 						<h2 className="text-xl py-2">Uses</h2>
 						<ul>
-							{uses.map(
+							{data?.jsonResponse.description.student.uses.split(".").map(
 								(sentence, index) =>
 									sentence !== "" && (
 										<li key={index} className="py-2 light-M">
@@ -181,27 +247,29 @@ export default function Body() {
 						</ul>
 						<h2 className="text-xl py-2">Medicinal Properties</h2>
 						<ul>
-							{medicinalProperties_s.map(
-								(sentence, index) =>
-									sentence !== "" && (
-										<li key={index} className="py-2 light-M">
-											<Image
-												alt="Bullet"
-												src={bullet}
-												width={20}
-												className="inline"
-											/>
-											{"  "}
-											<span className="font-thin leading-3 light-M">
-												{sentence}
-											</span>
-										</li>
-									)
-							)}
+							{data?.jsonResponse.description.student.medicinalProperties
+								.split(".")
+								.map(
+									(sentence, index) =>
+										sentence !== "" && (
+											<li key={index} className="py-2 light-M">
+												<Image
+													alt="Bullet"
+													src={bullet}
+													width={20}
+													className="inline"
+												/>
+												{"  "}
+												<span className="font-thin leading-3 light-M">
+													{sentence}
+												</span>
+											</li>
+										)
+								)}
 						</ul>
 						<h2 className="text-xl py-2">Storage Conditions</h2>
 						<ul>
-							{st_cond.map(
+							{data?.jsonResponse.description.student.storageConditions.split(".").map(
 								(sentence, index) =>
 									sentence !== "" && (
 										<li key={index} className="py-2 light-M">

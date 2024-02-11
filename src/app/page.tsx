@@ -7,20 +7,40 @@ import Result from "/public/images/Result.svg";
 import Server from "/public/images/Server.svg";
 import UpperStem from "/public/images/Upper Stem.svg";
 
+import path from "path";
+
 export default function Home() {
 	const router = useRouter();
-	const handleFileChange = (
+	const handleFileChange = async (
 		event: React.ChangeEvent<HTMLInputElement>
-	): void => {
+	) => {
 		const file = event.target.files?.[0];
 
 		if (file && file.type.startsWith("image/")) {
+			const formData = new FormData();
 			const reader = new FileReader();
 			reader.onload = () => {
-				localStorage.setItem("img", JSON.stringify(reader.result as string));
-				router.push(`/main`);
+				const imageData = {
+					name: file.name,
+					type: file.type,
+					size: file.size,
+					dataURL: reader.result,
+				};
+				localStorage.setItem("image", JSON.stringify(imageData));
 			};
-			reader.readAsDataURL(file);
+			formData.append("file", file);
+
+			const res = await fetch("/api/recognition", {
+				method: "POST",
+				body: formData,
+			});
+			const data = await res.json();
+			console.log("====================================");
+			console.log(data.jsonResponse.name);
+			console.log("====================================");
+			localStorage.setItem("name", data.jsonResponse.name);
+
+			router.push(`/main?plant=${data.jsonResponse.name}`);
 		} else {
 			alert("File is not an image");
 		}
