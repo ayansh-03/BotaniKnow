@@ -7,7 +7,6 @@ import Result from "/public/images/Result.svg";
 import Server from "/public/images/Server.svg";
 import UpperStem from "/public/images/Upper Stem.svg";
 
-import path from "path";
 
 export default function Home() {
 	const router = useRouter();
@@ -40,7 +39,7 @@ export default function Home() {
 			console.log("====================================");
 			localStorage.setItem("name", data.jsonResponse.name);
 
-			router.push(`/main?plant=${data.jsonResponse.name}`);
+			router.push(`/main?plant=${((data.jsonResponse.name) as string ) }`);
 		} else {
 			alert("File is not an image");
 		}
@@ -62,7 +61,7 @@ export default function Home() {
 							onChange={handleFileChange}
 							required
 						/>
-						Scan Now!
+						Scan Now! 
 					</label>
 				</div>
 			</section>

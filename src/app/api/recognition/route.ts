@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
       "name": "<plant_name>",
       "info": "<plant_info>",
       "description": {
+        "scientificName":"<plant_scientific_name>",
         "farmer": {
           "howToGrow": "",
           "requiredManure": "",
@@ -62,17 +63,22 @@ export async function POST(req: NextRequest) {
     const response = result.response;
     const text = response.text();
     const jsonResponse = JSON.parse(text);
-
-    await prisma.plant.upsert({
-      where: { name: jsonResponse.name }, // Identify the entry by name
-      create: {
+    console.log('====================================');
+    console.log("Parsed Text ",jsonResponse);
+    console.log('====================================');
+    const exist = await prisma.plant.findUnique({
+      where: {
         name: jsonResponse.name,
-        response: jsonResponse.description,
-      },
-      update: {
-        response: jsonResponse.description,
-      },
-    });
+      }
+    })
+    if(!exist){
+      await prisma.plant.create({
+        data:{
+          name: jsonResponse.name,
+          response: jsonResponse.description
+        }
+      })
+    }
     
 
 
